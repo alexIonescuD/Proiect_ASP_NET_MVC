@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Proiect_ASP_NET_MVC.Models.ProjectViewModels.OrderGroup>
+@{
+    ViewData["Title"] = "Ordered Cars Statistics";
+}
+<h2>Ordered Cars Statistics</h2>
+<table>
+    <tr>
+        <th>
+            Order Date
+        </th>
+        <th>
+            Ordered Cars
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @item.CarCount
+            </td>
+        </tr>
+    }
+</table>

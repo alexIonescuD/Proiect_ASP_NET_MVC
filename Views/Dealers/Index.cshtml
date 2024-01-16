@@ -1,0 +1,88 @@
+﻿@model Proiect_ASP_NET_MVC.Models.ProjectViewModels.DealerIndexData
+@{
+    ViewData["Title"] = "Dealers";
+}
+<h2>Dealers</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dealer Name</th>
+            <th>Adress</th>
+            <th>Cars</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Dealers)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["DealerID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.DealerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+
+                <td>
+                    @{
+
+                        foreach (var car in item.SoldCars)
+                        {
+                            var fullName = car.Car.Brand.Name + " " + car.Car.Model;
+                            @car.Car.ID @: @fullName <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Cars != null)
+{
+    <h3>Cars Sold by Selected Dealer</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var item in Model.Cars)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["CarID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { carID = item.ID })
+                </td>
+                <td>
+                    @item.Brand.Name
+                </td>
+                <td>
+                    @item.Model
+                </td>
+                <td>
+                    @item.Price
+                </td>
+            </tr>
+        }
+    </table>
+}
